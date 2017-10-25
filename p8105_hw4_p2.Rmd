@@ -2,10 +2,7 @@
 title: "p8105_hw4_p2"
 author: "Ruiwei Zhang"
 date: "10/24/2017"
-output: 
-   html_document:
-    toc: true
-    toc_float: true
+output: html_document
 ---
 
 ```{r getting_ready}
@@ -23,6 +20,8 @@ knitr::opts_chunk$set(
 )
 ```
 
+### Load, tidy and combine dataset by the project lead rz2375
+
 ```{r}
 pols_month = 
   read.csv("./fivethirtyeight_datasets/pols-month.csv") %>%
@@ -39,7 +38,8 @@ combined =
   full_join(pols_month, GDP, by = "date")
 ```
 
-#Getting the data ready for plot
+### Getting the data ready for plot
+
 ```{r}
 combined <- as.tibble(combined) %>% 
   filter(!is.na(value)) %>%
@@ -49,11 +49,12 @@ combined <- as.tibble(combined) %>%
 ```
 **Clean the data so that president information are in one row.**  
 
-#Plot the GDP showing the GDP value over time
+### Plot the GDP showing the GDP value over time
+
 ```{r}
-combined %>% ggplot(aes(x = date, y = GDP)) + geom_point(aes(color = president)) + geom_line(aes(color = president)) + labs(title = "GDP value over time from different party president")
-combined %>% ggplot(aes(x = date, y = GDP)) + geom_point(aes(color = president)) + geom_line(aes(color = president)) + facet_grid(~president) + labs(title = "GDP value over time from different party president") + theme(legend.position = "bottom")
+combined %>% ggplot(aes(x = date, y = GDP)) + geom_point(aes(color = president), size = .5, alpha = .5) + geom_line(aes(color = president), size = .5, alpha = .5) + labs(title = "GDP value over time from different party president")
+combined %>% ggplot(aes(x = date, y = GDP)) + geom_point(aes(color = president), size = .5, alpha = .5) + geom_line(aes(color = president), size = .5, alpha = .5) + facet_grid(~president) + labs(title = "GDP value over time from different party president") + theme(legend.position = "bottom")
 ```
 
-**From the plot, from the plots we can see that the GDP value varies from time to time, and the party of the president doesnt really affect the value. And the values over the years are fluctuating but never drop to very low level.**
+**From the plots, we can see that the GDP value varies from time to time, and the party of the president doesnt really affect the value. And the values over the years are fluctuating but never drop to very low level.**
 
