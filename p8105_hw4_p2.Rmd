@@ -44,7 +44,7 @@ combined =
 combined <- as.tibble(combined) %>% 
   filter(!is.na(value)) %>%
   filter(!value == ".") %>%
-  mutate(president = ifelse(prez_gop == 1, "gop", "dem")) %>%
+  mutate(president = ifelse(prez_gop == 1, "Republican", "Democratic")) %>%
   mutate(president = as.factor(president), GDP = as.numeric(value))
 ```
 **Clean the data so that president information are in one row.**  
@@ -52,7 +52,7 @@ combined <- as.tibble(combined) %>%
 #Plot the GDP showing the GDP value over time
 ```{r}
 combined %>% ggplot(aes(x = date, y = GDP)) + geom_point(aes(color = president)) + geom_line(aes(color = president)) + labs(title = "GDP value over time from different party president")
-combined %>% ggplot(aes(x = date, y = GDP)) + geom_point(aes(color = president)) + geom_line(aes(color = president)) + facet_grid(~president) + labs(title = "GDP value over time from different party president")
+combined %>% ggplot(aes(x = date, y = GDP)) + geom_point(aes(color = president)) + geom_line(aes(color = president)) + facet_grid(~president) + labs(title = "GDP value over time from different party president") + theme(legend.position = "bottom")
 ```
 
 **From the plot, from the plots we can see that the GDP value varies from time to time, and the party of the president doesnt really affect the value. And the values over the years are fluctuating but never drop to very low level.**
