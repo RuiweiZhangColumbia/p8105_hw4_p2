@@ -1,0 +1,40 @@
+---
+title: "p8105_hw4_p2"
+author: "Ruiwei Zhang"
+date: "10/24/2017"
+output: 
+   html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r getting_ready}
+library(tidyverse)
+library(haven)
+library(janitor)
+library(readxl)
+library(ggridges)
+library(ggthemes)
+library(knitr)
+knitr::opts_chunk$set(
+  fig.width = 6,
+  fig.asp = .6,
+  out.width = "90%"
+)
+```
+
+```{r}
+pols_month = 
+  read.csv("./fivethirtyeight_datasets/pols-month.csv") %>%
+  clean_names() %>%
+  mutate(mon = as.Date(mon),
+         mon = lubridate::floor_date(mon, "month")) %>%
+  rename(date = mon)
+GDP = 
+  read.csv("./fivethirtyeight_datasets/GDP.csv") %>%
+  clean_names() %>%
+  mutate(date = as.Date(date),
+         date = lubridate::floor_date(date, "month"))
+combined = 
+  full_join(pols_month, GDP, by = "date")
+```
